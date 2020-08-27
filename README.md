@@ -26,10 +26,17 @@ The tracking image will be moved below the fold and trigger the counter [with na
 **site/config/config.php**
 ```php
 <?php
-return [ 
+return [
+    /* default 
     'bnomei.pageviewcounter.counter' => function () {
             return new \Bnomei\PageViewCounterSQLite();
     },
+    'bnomei.pageviewcounter.sqlite.file' => function () {
+        $dir = realpath(kirby()->roots()->accounts() . '/../');
+        Dir::make($dir);
+        return $dir . '/pageviewcounter.sqlite';
+    },
+    */
     // other options ...
 ];
 ```
