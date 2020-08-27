@@ -1,0 +1,74 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Bnomei;
+
+use Kirby\Toolkit\A;
+
+final class PageViewCounter
+{
+    /** @var PageViewCountIncrementor $counter */
+    private $counter;
+
+    /** @var array $options */
+    private $options;
+
+    public function __construct(array $options = [])
+    {
+        $defaults = [
+            'debug' => option('debug'),
+        ];
+        $this->options = array_merge($defaults, $options);
+
+        $this->counter = \option('bnomei.pageviewcounter.counter')();
+
+        if ($this->option('debug')) {
+            kirby()->cache('bnomei.pageviewcounter')->flush();
+        }
+    }
+
+    /**
+     * @param string|null $key
+     * @return array|mixed
+     */
+    public function option(?string $key = null)
+    {
+        if ($key) {
+            return A::get($this->options, $key);
+        }
+        return $this->options;
+    }
+
+    public function increment(string $id, int $timestamp)
+    {
+        $this->counter->increment($id, $timestamp);
+    }
+
+    public function pixel()
+    {
+        $IMG = \imagecreate(1, 1);
+        $background = \imagecolorallocate($IMG, 0,0,0);
+        \header( "Content-type: image/png" );
+        \imagepng($IMG);
+        \imagecolordeallocate($IMG, $background );
+        \imagedestroy($IMG);
+        exit;
+    }
+
+    /** @var PageViewCounter */
+    private static $singleton;
+
+    /**
+     * @param array $options
+     * @return PageViewCounter
+     */
+    public static function singleton(array $options = [])
+    {
+        if (!self::$singleton) {
+            self::$singleton = new self($options);
+        }
+
+        return self::$singleton;
+    }
+}
