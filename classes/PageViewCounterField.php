@@ -26,7 +26,7 @@ class PageViewCounterField implements PageViewCountIncrementor
         return function_exists('bolt') ? \bolt($id) : \page($id);
     }
 
-    public function increment(string $id, int $timestamp,  int $count = 1): ?int
+    public function increment(string $id, int $timestamp, int $count = 1): ?int
     {
         $page = $this->pageFromID($id);
         if (!$page) {
@@ -43,7 +43,7 @@ class PageViewCounterField implements PageViewCountIncrementor
         return $current[$this->fieldcount];
     }
 
-    public function get(string $id): array
+    public function get(string $id): ?array
     {
         $page = $this->pageFromID($id);
         $field = $page->{$this->fieldcount}();
@@ -57,5 +57,15 @@ class PageViewCounterField implements PageViewCountIncrementor
             $this->fieldcount => 0,
             $this->fieldtimestamp => 0,
         ];
+    }
+
+    public function count(string $id): int
+    {
+        return $this->get($id)[$this->fieldcount];
+    }
+
+    public function timestamp(string $id): int
+    {
+        return $this->get($id)[$this->fieldtimestamp];
     }
 }

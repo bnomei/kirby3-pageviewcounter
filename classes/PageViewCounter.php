@@ -40,18 +40,29 @@ final class PageViewCounter
         return $this->options;
     }
 
-    public function increment(string $id, int $timestamp)
+    public function increment(string $id, ?int $timestamp = null): int
     {
-        $this->counter->increment($id, $timestamp);
+        $timestamp = $timestamp ?? time();
+        return $this->counter->increment($id, $timestamp);
+    }
+
+    public function count(string  $id): int
+    {
+        return $this->counter->count($id);
+    }
+
+    public function timestamp(string  $id): int
+    {
+        return $this->counter->timestamp($id);
     }
 
     public function pixel()
     {
         $IMG = \imagecreate(1, 1);
-        $background = \imagecolorallocate($IMG, 0,0,0);
-        \header( "Content-type: image/png" );
+        $background = \imagecolorallocate($IMG, 0, 0, 0);
+        \header("Content-type: image/png");
         \imagepng($IMG);
-        \imagecolordeallocate($IMG, $background );
+        \imagecolordeallocate($IMG, $background);
         \imagedestroy($IMG);
         exit;
     }

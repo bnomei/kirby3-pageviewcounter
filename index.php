@@ -5,8 +5,8 @@
 Kirby::plugin('bnomei/pageviewcounter', [
     'options' => [
         'counter' => function () {
-            return new \Bnomei\PageViewCounterField();
-        //    return new \Bnomei\PageViewCounterSQLite();
+            //    return new \Bnomei\PageViewCounterField();
+            return new \Bnomei\PageViewCounterSQLite();
         },
         'image' => [
             'style' => 'position: absolute; top: 100vh; right: 0; pointer-events: none; height: 1px; width: 1px; opacity: 0;',
@@ -18,7 +18,9 @@ Kirby::plugin('bnomei/pageviewcounter', [
         'sqlite' => [
             'file' => function () {
                 $dir = realpath(kirby()->roots()->accounts() . '/../');
-                Dir::make($dir);
+                if (!Dir::exists($dir)) {
+                    Dir::make($dir);
+                }
                 return $dir . '/pageviewcounter.sqlite';
             },
         ],

@@ -36,3 +36,5 @@ coverage.xml
 /tests/site/sessions/
 /tests/site/logs/
 /node_modules/
+
+*.sqlite
