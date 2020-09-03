@@ -20,6 +20,7 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
     public function __construct(array $options = [])
     {
         $this->options = array_merge([
+            'wal' => \option('bnomei.pageviewcounter.sqlite.wal'),
             'file' => \option('bnomei.pageviewcounter.sqlite.file'),
         ], $options);
 
@@ -31,7 +32,7 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
 
         $target = strval($this->options['file']);
         $this->database = new \SQLite3($target);
-        if (\SQLite3::version() >= 3007001) {
+        if (\SQLite3::version() >= 3007001 && $this->options['wal']) {
             $this->database->exec("PRAGMA busy_timeout=1000");
             $this->database->exec("PRAGMA journal_mode = WAL");
         }
@@ -40,7 +41,7 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
 
     public function __destruct()
     {
-        if (\SQLite3::version() >= 3007001) {
+        if (\SQLite3::version() >= 3007001 && $this->options['wal']) {
             $this->database()->exec('PRAGMA main.wal_checkpoint(TRUNCATE);');
         }
         $this->database()->close();
@@ -59,7 +60,6 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
     public function increment(string $id, int $timestamp, int $count = 1): ?int
     {
         $obj = $this->get($id);
-
 
         if ($obj === null) {
             $viewcount = $count;

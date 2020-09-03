@@ -16,6 +16,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
             'timestamp' => 'lastvisited',
         ],
         'sqlite' => [
+            'wal' => true,
             'file' => function () {
                 $dir = realpath(kirby()->roots()->accounts() . '/../');
                 if (!Dir::exists($dir)) {
