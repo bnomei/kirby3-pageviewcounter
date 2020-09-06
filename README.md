@@ -31,7 +31,6 @@ return [
     'bnomei.pageviewcounter.counter' => function () {
             return new \Bnomei\PageViewCounterSQLite();
     },
-    'bnomei.pageviewcounter.sqlite.wal' => true, // sqlite WAL for faster IO
     'bnomei.pageviewcounter.sqlite.file' => function () {
         $dir = realpath(kirby()->roots()->accounts() . '/../');
         Dir::make($dir);
