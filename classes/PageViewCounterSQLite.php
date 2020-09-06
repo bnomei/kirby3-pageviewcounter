@@ -11,7 +11,7 @@ use Kirby\Toolkit\Obj;
 
 class PageViewCounterSQLite implements PageViewCountIncrementor
 {
-    /** @var \SQLite3 */
+    /** @var Database */
     private $database;
 
     /** @var array */
@@ -30,21 +30,17 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
             }
         }
 
-        $target = strval($this->options['file']);
-        $this->database = new \SQLite3($target);
-        if (\SQLite3::version() >= 3007001 && $this->options['wal']) {
-            $this->database->exec("PRAGMA busy_timeout=1000");
-            $this->database->exec("PRAGMA journal_mode = WAL");
+        $target = $this->options['file'];
+        if (!F::exists($target)) {
+            $db = new \SQLite3($target);
+            $db->exec("CREATE TABLE IF NOT EXISTS pageviewcount (id TEXT primary key unique, viewcount INTEGER, last_visited_at INTEGER)");
+            $db->close();
         }
-        $this->database->query("CREATE TABLE IF NOT EXISTS pageviewcount (id TEXT primary key unique, viewcount INTEGER, last_visited_at INTEGER)");
-    }
 
-    public function __destruct()
-    {
-        if (\SQLite3::version() >= 3007001 && $this->options['wal']) {
-            $this->database()->exec('PRAGMA main.wal_checkpoint(TRUNCATE);');
-        }
-        $this->database()->close();
+        $this->database = new Database([
+            'type' => 'sqlite',
+            'database' => $target,
+        ]);
     }
 
     public function databaseFile(): string
@@ -52,7 +48,7 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
         return $this->options['file'];
     }
 
-    public function database(): \SQLite3
+    public function database(): Database
     {
         return $this->database;
     }
@@ -65,32 +61,31 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
             $viewcount = $count;
             $this->database()->query("INSERT INTO pageviewcount (id, viewcount, last_visited_at) VALUES ('${id}', ${viewcount}, ${timestamp})");
         } else {
-            $viewcount = intval($obj['viewcount']) + $count;
-            $timestamp = intval($obj['last_visited_at']) < $timestamp ? $timestamp : $obj['last_visited_at'];
+            $viewcount = $obj->viewcount + $count;
+            $timestamp = $obj->last_visited_at < $timestamp ? $timestamp : $obj->last_visited_at;
             $this->database()->query("UPDATE pageviewcount SET viewcount = ${viewcount}, last_visited_at = ${timestamp} WHERE id='${id}'");
         }
 
         return $viewcount;
     }
 
-    public function get(string $id): ?array
+    public function get(string $id): ?Obj
     {
-        $results = $this->database()
-            ->query("SELECT * from pageviewcount WHERE id='${id}'")
-            ->fetchArray(SQLITE3_ASSOC);
-
-        return $results ? $results : null;
+        foreach ($this->database()->query("SELECT * from pageviewcount WHERE id='${id}'") as $obj) {
+            return $obj;
+        }
+        return null;
     }
 
     public function count(string $id): int
     {
         $obj = $this->get($id);
-        return $obj ? intval($obj['viewcount']) : 0;
+        return $obj ? intval($obj->viewcount) : 0;
     }
 
     public function timestamp(string $id): int
     {
         $obj = $this->get($id);
-        return $obj ? intval($obj['last_visited_at']) : 0;
+        return $obj ? intval($obj->last_visited_at) : 0;
     }
 }

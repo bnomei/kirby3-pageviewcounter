@@ -18,7 +18,11 @@ final class PageViewCounterTest extends TestCase
     {
         $target = \option('bnomei.pageviewcounter.sqlite.file')();
         F::remove($target);
-        new PageViewCounter();
+        new PageViewCounter([
+            'counter' => function () {
+                return new \Bnomei\PageViewCounterSQLite();
+            },
+        ]);
         $this->assertFileExists($target);
     }
 

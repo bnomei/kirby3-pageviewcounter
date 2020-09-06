@@ -18,10 +18,11 @@ final class PageViewCounter
     {
         $defaults = [
             'debug' => option('debug'),
+            'counter' => \option('bnomei.pageviewcounter.counter'),
         ];
         $this->options = array_merge($defaults, $options);
 
-        $this->counter = \option('bnomei.pageviewcounter.counter')();
+        $this->counter = $this->options['counter']();
 
         if ($this->option('debug')) {
             kirby()->cache('bnomei.pageviewcounter')->flush();

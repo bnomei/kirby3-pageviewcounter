@@ -5,7 +5,7 @@
 Kirby::plugin('bnomei/pageviewcounter', [
     'options' => [
         'counter' => function () {
-            //    return new \Bnomei\PageViewCounterField();
+            // return new \Bnomei\PageViewCounterField();
             return new \Bnomei\PageViewCounterSQLite();
         },
         'image' => [
