@@ -9,6 +9,20 @@
 
 Track Page view count and last visited timestamp
 
+
+## Commercial Usage
+
+This plugin is free (MIT license) but if you use it in a commercial project please consider to
+- [make a donation 🍻](https://www.paypal.me/bnomei/5) or
+- [buy me ☕](https://buymeacoff.ee/bnomei) or
+- [buy a Kirby license using this affiliate link](https://a.paddle.com/v2/click/1129/35731?link=1170)
+
+## Installation
+
+- unzip [master.zip](https://github.com/bnomei/kirby3-pageviewcounter/archive/master.zip) as folder `site/plugins/kirby3-pageviewcounter` or
+- `git submodule add https://github.com/bnomei/kirby3-pageviewcounter.git site/plugins/kirby3-pageviewcounter` or
+- `composer require bnomei/kirby3-pageviewcounter`
+
 ## Usage
 
 Echo the tracking 1x1px image anywhere in your template.
