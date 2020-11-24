@@ -2,7 +2,7 @@
   "name": "bnomei/kirby3-pageviewcounter",
   "description": "Track Page view count and last visited timestamp",
   "type": "kirby-plugin",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "license": "MIT",
   "authors": [
     {
