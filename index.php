@@ -29,7 +29,11 @@ Kirby::plugin('bnomei/pageviewcounter', [
     ],
     'pageMethods' => [
         'counterImage' => function () {
-            return \Kirby\Toolkit\Html::img($this->url() . '/counter/' . time(), [
+            return \Kirby\Toolkit\Html::img($this->url(
+                    kirby()->languages()->count() > 1 ?
+                        kirby()->languages()->first()->code() :
+                        null
+                ) . '/counter/' . time(), [
                 'loading' => 'lazy',
                 'alt' => 'pageview counter pixel',
                 'style' => option('bnomei.pageviewcounter.image.style'),
@@ -39,8 +43,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
     'routes' => [
         [
             'pattern' => 'counter/(:num)',
-            'language' => '*',
-            'action' => function ($language,$timestamp) {
+            'action' => function ($timestamp) {
                 \Bnomei\PageViewCounter::singleton()->increment(
                     site()->homePage()->id(),
                     $timestamp
@@ -50,8 +53,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
         ],
         [
             'pattern' => '(:all)/counter/(:num)',
-            'language' => '*',
-            'action' => function ($language, $id, $timestamp) {
+            'action' => function ($id, $timestamp) {
                 \Bnomei\PageViewCounter::singleton()->increment(
                     $id,
                     $timestamp
