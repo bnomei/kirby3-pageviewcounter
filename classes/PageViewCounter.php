@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bnomei;
 
+use Exception;
 use Kirby\Toolkit\A;
 
 final class PageViewCounter
@@ -25,7 +26,11 @@ final class PageViewCounter
         $this->counter = $this->options['counter']();
 
         if ($this->option('debug')) {
-            kirby()->cache('bnomei.pageviewcounter')->flush();
+            try {
+                kirby()->cache('bnomei.pageviewcounter')->flush();
+            } catch (Exception $e) {
+                //
+            }
         }
     }
 
