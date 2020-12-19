@@ -49,33 +49,39 @@ Kirby::plugin('bnomei/pageviewcounter', [
     ],
     'routes' => [
         [
-            'pattern' => 'counter/(:num)/visitor',
+            'pattern' => 'counter/(:num)/(:any)',
             'language' => '*',
-            'action' => function ($language, ?string $timestamp = null) {
+            'action' => function ($language, $timestamp, $action = null) {
                 // single language setup
-                if(!$timestamp) {
+                if(!$action) {
+                    $action = $timestamp;
                     $timestamp = $language;
                 }
-                \Bnomei\PageViewCounter::singleton()->increment(
-                    site()->homePage()->id(),
-                    $timestamp
-                );
+                if($action === 'visitor') {
+                    \Bnomei\PageViewCounter::singleton()->increment(
+                        site()->homePage()->id(),
+                        $timestamp
+                    );
+                }
                 \Bnomei\PageViewCounter::singleton()->pixel();
             },
         ],
         [
-            'pattern' => '(:all)/counter/(:num)/visitor',
+            'pattern' => '(:all)/counter/(:num)/(:any)',
             'language' => '*',
-            'action' => function ($language, $id, ?string $timestamp = null) {
+            'action' => function ($language, $id, $timestamp, $action = null) {
                 // single language setup
-                if(!$timestamp) {
+                if(!$action) {
+                    $action = $timestamp;
                     $timestamp = $id;
                     $id = $language;
                 }
-                \Bnomei\PageViewCounter::singleton()->increment(
-                    $id,
-                    $timestamp
-                );
+                if($action === 'visitor') {
+                    \Bnomei\PageViewCounter::singleton()->increment(
+                        $id,
+                        $timestamp
+                    );
+                }
                 \Bnomei\PageViewCounter::singleton()->pixel();
             },
         ],
