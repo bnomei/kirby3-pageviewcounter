@@ -51,7 +51,11 @@ Kirby::plugin('bnomei/pageviewcounter', [
         [
             'pattern' => 'counter/(:num)/visitor',
             'language' => '*',
-            'action' => function ($language, $timestamp) {
+            'action' => function ($language, ?string $timestamp = null) {
+                // single language setup
+                if(!$timestamp) {
+                    $timestamp = $language;
+                }
                 \Bnomei\PageViewCounter::singleton()->increment(
                     site()->homePage()->id(),
                     $timestamp
@@ -62,7 +66,12 @@ Kirby::plugin('bnomei/pageviewcounter', [
         [
             'pattern' => '(:all)/counter/(:num)/visitor',
             'language' => '*',
-            'action' => function ($language, $id, $timestamp) {
+            'action' => function ($language, $id, ?string $timestamp = null) {
+                // single language setup
+                if(!$timestamp) {
+                    $timestamp = $id;
+                    $id = $language;
+                }
                 \Bnomei\PageViewCounter::singleton()->increment(
                     $id,
                     $timestamp
