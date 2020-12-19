@@ -32,7 +32,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
     ],
     'pageMethods' => [
         'counterImage' => function () {
-            $user = (kirby()->user() && config('bnomei.pageviewcounter.ignore-panel-users')) ||
+            $user = (kirby()->user() && option('bnomei.pageviewcounter.ignore-panel-users')) ||
                 intval(get('ignore', 0)) === 1 ?
                 'ignore' :
                 'visitor';
