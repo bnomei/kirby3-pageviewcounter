@@ -4,6 +4,7 @@
 
 Kirby::plugin('bnomei/pageviewcounter', [
     'options' => [
+        'ignore-panel-users' => true,
         'counter' => function () {
             // return new \Bnomei\PageViewCounterField();
             return new \Bnomei\PageViewCounterSQLite();
@@ -18,22 +19,28 @@ Kirby::plugin('bnomei/pageviewcounter', [
         'sqlite' => [
             'wal' => true,
             'file' => function () {
-                $dir = realpath(kirby()->roots()->accounts() . '/../');
-                if (!Dir::exists($dir)) {
-                    Dir::make($dir);
+                $old = realpath(kirby()->roots()->accounts() . '/../') . '/pageviewcounter.sqlite';
+                $new = realpath(kirby()->roots()->log()) . '/pageviewcounter.sqlite';
+                // migrate
+                if (F::exists($old)) {
+                    F::move($old, $new, true);
                 }
-                return $dir . '/pageviewcounter.sqlite';
+                return $new;
             },
         ],
         'cache' => true,
     ],
     'pageMethods' => [
         'counterImage' => function () {
+            $user = (kirby()->user() && config('bnomei.pageviewcounter.ignore-panel-users')) ||
+                intval(get('ignore', 0)) === 1 ?
+                'ignore' :
+                'visitor';
             return \Kirby\Toolkit\Html::img($this->url(
                     kirby()->languages()->count() > 1 ?
                         kirby()->languages()->first()->code() :
                         null
-                ) . '/counter/' . time(), [
+                ) . '/counter/' . time() . '/' . $user, [
                 'loading' => 'lazy',
                 'alt' => 'pageview counter pixel',
                 'style' => option('bnomei.pageviewcounter.image.style'),
@@ -42,7 +49,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
     ],
     'routes' => [
         [
-            'pattern' => 'counter/(:num)',
+            'pattern' => 'counter/(:num)/visitor',
             'language' => '*',
             'action' => function ($language, $timestamp) {
                 \Bnomei\PageViewCounter::singleton()->increment(
@@ -53,7 +60,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
             },
         ],
         [
-            'pattern' => '(:all)/counter/(:num)',
+            'pattern' => '(:all)/counter/(:num)/visitor',
             'language' => '*',
             'action' => function ($language, $id, $timestamp) {
                 \Bnomei\PageViewCounter::singleton()->increment(

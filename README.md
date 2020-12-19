@@ -72,6 +72,16 @@ return [
 
 > NOTE: Be warned that Page Fields might not work well for concurrent requests.
 
+## Settings
+
+| bnomei.pageviewcounter.            | Default        | Description               |            
+|---------------------------|----------------|---------------------------|
+| field.counter | `fn()` | callback. returns instance of sqlite or field counter class |
+| field.ignore-panel-users | `true` | boolean. if `true` will not increment count if session is by a panel user. |
+| field.sqlite.file | `fn()` | callback. returns filepath to sqlite file |
+| field.field.count | `viewcount` | string. name of field in page blueprint |
+| field.field.timestamp | `lastvisited` | string. name of field in page blueprint |
+
 ## Disclaimer
 
 This plugin is provided "as is" with no guarantee. Use it at your own risk and always test it yourself before using it in a production environment. If you find any issues, please [create a new issue](https://github.com/bnomei/kirby3-pageviewcounter/issues/new).
