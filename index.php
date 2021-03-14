@@ -10,7 +10,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
             return new \Bnomei\PageViewCounterSQLite();
         },
         'image' => [
-            'style' => 'position: absolute; top: 100vh; right: 0; pointer-events: none; height: 1px; width: 1px; opacity: 0;',
+            'style' => 'position: absolute; top: 100vh; left: 0; pointer-events: none; height: 1px; width: 1px; opacity: 0;',
         ],
         'field' => [
             'count' => 'viewcount',
