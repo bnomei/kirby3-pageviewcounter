@@ -37,10 +37,10 @@ Kirby::plugin('bnomei/pageviewcounter', [
                 'ignore' :
                 'visitor';
             return \Kirby\Toolkit\Html::img($this->url(
-                    kirby()->languages()->count() > 1 ?
+                kirby()->languages()->count() > 1 ?
                         kirby()->languages()->first()->code() :
                         null
-                ) . '/counter/' . time() . '/' . $user, [
+            ) . '/counter/' . time() . '/' . $user, [
                 'loading' => 'lazy',
                 'alt' => 'pageview counter pixel',
                 'style' => option('bnomei.pageviewcounter.image.style'),
@@ -53,11 +53,11 @@ Kirby::plugin('bnomei/pageviewcounter', [
             'language' => '*',
             'action' => function ($language, $timestamp, $action = null) {
                 // single language setup
-                if(!$action) {
+                if (!$action) {
                     $action = $timestamp;
                     $timestamp = $language;
                 }
-                if($action === 'visitor') {
+                if ($action === 'visitor') {
                     \Bnomei\PageViewCounter::singleton()->increment(
                         site()->homePage()->id(),
                         $timestamp
@@ -71,12 +71,12 @@ Kirby::plugin('bnomei/pageviewcounter', [
             'language' => '*',
             'action' => function ($language, $id, $timestamp, $action = null) {
                 // single language setup
-                if(!$action) {
+                if (!$action) {
                     $action = $timestamp;
                     $timestamp = $id;
                     $id = $language;
                 }
-                if($action === 'visitor') {
+                if ($action === 'visitor') {
                     \Bnomei\PageViewCounter::singleton()->increment(
                         $id,
                         $timestamp

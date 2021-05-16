@@ -10,6 +10,7 @@ return array(
     'Bnomei\\PageViewCounter' => $baseDir . '/classes/PageViewCounter.php',
     'Bnomei\\PageViewCounterField' => $baseDir . '/classes/PageViewCounterField.php',
     'Bnomei\\PageViewCounterSQLite' => $baseDir . '/classes/PageViewCounterSQLite.php',
+    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Kirby\\ComposerInstaller\\CmsInstaller' => $vendorDir . '/getkirby/composer-installer/src/ComposerInstaller/CmsInstaller.php',
     'Kirby\\ComposerInstaller\\Installer' => $vendorDir . '/getkirby/composer-installer/src/ComposerInstaller/Installer.php',
     'Kirby\\ComposerInstaller\\Plugin' => $vendorDir . '/getkirby/composer-installer/src/ComposerInstaller/Plugin.php',

@@ -33,6 +33,7 @@ class ComposerStaticInitc6a76bac68b4157c1116435388482330
         'Bnomei\\PageViewCounter' => __DIR__ . '/../..' . '/classes/PageViewCounter.php',
         'Bnomei\\PageViewCounterField' => __DIR__ . '/../..' . '/classes/PageViewCounterField.php',
         'Bnomei\\PageViewCounterSQLite' => __DIR__ . '/../..' . '/classes/PageViewCounterSQLite.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Kirby\\ComposerInstaller\\CmsInstaller' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/CmsInstaller.php',
         'Kirby\\ComposerInstaller\\Installer' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/Installer.php',
         'Kirby\\ComposerInstaller\\Plugin' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/Plugin.php',
