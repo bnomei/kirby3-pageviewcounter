@@ -57,6 +57,31 @@ return [
 
 ## Page Fields (alternative)
 
+Add kirby text or hidden fields. I usually have blueprints for them and extend them in my target pages blueprints. like this...
+
+**site/blueprints/fields/viewcount.yml**
+```yml
+type: number
+min: 0
+default: 0
+disabled: true
+label: Visit Count
+```
+
+**site/blueprints/fields/lastvisited.yml**
+```yml
+type: hidden
+```
+
+**in your page blueprint**
+```yml
+fields:
+  viewcount:
+    extends: fields/viewcount
+  lastvisited:
+    extends: fields/lastvisited
+```
+
 **site/config/config.php**
 ```php
 <?php
