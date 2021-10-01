@@ -9,7 +9,7 @@
 
 Track Page view count and last visited timestamp
 
-## Commerical Usage
+## Commercial Usage
 
 > <br>
 > <b>Support open source!</b><br><br>
