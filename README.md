@@ -43,13 +43,31 @@ The tracking image will be moved below the fold and trigger the counter [with na
 
 ## SQLite database (default)
 
+To view the tracked count and timestamp this plugin provides two optional fields.
+
+**in your page blueprint**
+```yml
+fields:
+  counter:
+    label: Page view count
+    type: viewcount
+  lastvisited:
+    label: Page last visited
+    type: lastvisited
+    # format: 'DD-MM-YYYY'
+```
+
+> Kirby has *day.js* built in which you can use to [format your date](https://day.js.org/docs/en/display/format) output.
+
+You do not have to add anything to you config files. But you could make some changes to the defaults, like the path to the sqlite file if you wanted to.
+
 **site/config/config.php**
 ```php
 <?php
 return [
     /* default 
     'bnomei.pageviewcounter.counter' => function () {
-            return new \Bnomei\PageViewCounterSQLite();
+        return new \Bnomei\PageViewCounterSQLite();
     },
     'bnomei.pageviewcounter.sqlite.file' => function () {
         $dir = realpath(kirby()->roots()->accounts() . '/../');
@@ -63,7 +81,7 @@ return [
 
 ## Page Fields (alternative)
 
-Add kirby text or hidden fields. I usually have blueprints for them and extend them in my target pages blueprints. like this...
+If you do not want to store your tracked counts in a sqlite file then add kirby text or hidden fields to your blueprint. I usually have blueprints for them and extend them in my target pages blueprints. like this...
 
 **site/blueprints/fields/viewcount.yml**
 ```yml

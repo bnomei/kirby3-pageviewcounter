@@ -1,0 +1,8 @@
+fields:
+  counter:
+    label: Page view count
+    type: viewcount
+  lastvisited:
+    label: Page last visited
+    type: lastvisited
+    # format: 'DD-MM-YYYY' # https://day.js.org/docs/en/display/format

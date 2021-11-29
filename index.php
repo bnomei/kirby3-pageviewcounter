@@ -30,6 +30,27 @@ Kirby::plugin('bnomei/pageviewcounter', [
         ],
         'cache' => true,
     ],
+    'fields' => [
+        'viewcount' => [
+            'computed' => [
+                'value' => function () {
+                    return \Bnomei\PageViewCounter::singleton()->count($this->model()->id());
+                },
+            ],
+        ],
+        'lastvisited' => [
+            'props' => [
+                'format' => function (?string $format = null) {
+                    return $format ?? 'YYYY-MM-DD HH:m:s';
+                },
+            ],
+            'computed' => [
+                'value' => function () {
+                    return date('c', \Bnomei\PageViewCounter::singleton()->timestamp($this->model()->id()));
+                },
+            ],
+        ],
+    ],
     'pageMethods' => [
         'counterImage' => function () {
             $user = (kirby()->user() && option('bnomei.pageviewcounter.ignore-panel-users')) ||
