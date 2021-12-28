@@ -46,10 +46,20 @@ final class PageViewCounter
         return $this->options;
     }
 
-    public function increment(string $id, ?int $timestamp = null): int
+    public function increment(string $id, ?int $timestamp = null, int $count = 1): int
     {
         $timestamp = $timestamp ?? time();
-        return $this->counter->increment($id, $timestamp);
+        return $this->counter->increment($id, $timestamp, $count);
+    }
+
+    public function importAppend(array $data): int
+    {
+        $count = 0;
+        foreach ($data as $item) {
+           $this->increment($item['id'], $item['last_visited_at'], $item['viewcount']);
+           $count++;
+        }
+        return $count; 
     }
 
     public function count(string  $id): int
