@@ -20,7 +20,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
             'wal' => true,
             'file' => function () {
                 $old = realpath(kirby()->roots()->accounts() . '/../') . '/pageviewcounter.sqlite';
-                $new = realpath(kirby()->roots()->log()) . '/pageviewcounter.sqlite';
+                $new = realpath(kirby()->roots()->logs()) . '/pageviewcounter.sqlite';
                 // migrate
                 if (F::exists($old)) {
                     F::move($old, $new, true);
