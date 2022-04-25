@@ -56,10 +56,10 @@ final class PageViewCounter
     {
         $count = 0;
         foreach ($data as $item) {
-           $this->increment($item['id'], $item['last_visited_at'], $item['viewcount']);
-           $count++;
+            $this->increment($item['id'], $item['last_visited_at'], $item['viewcount']);
+            $count++;
         }
-        return $count; 
+        return $count;
     }
 
     public function count(string  $id): int
