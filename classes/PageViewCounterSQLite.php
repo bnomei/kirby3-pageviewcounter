@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Bnomei;
 
 use Kirby\Database\Database;
+use Kirby\Filesystem\F;
 use Kirby\Toolkit\Collection;
-use Kirby\Toolkit\F;
 use Kirby\Toolkit\Obj;
 
 class PageViewCounterSQLite implements PageViewCountIncrementor
