@@ -20,7 +20,6 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
     public function __construct(array $options = [])
     {
         $this->options = array_merge([
-            'wal' => \option('bnomei.pageviewcounter.sqlite.wal'),
             'file' => \option('bnomei.pageviewcounter.sqlite.file'),
         ], $options);
 
