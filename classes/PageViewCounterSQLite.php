@@ -58,11 +58,11 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
 
         if ($obj === null) {
             $viewcount = $count;
-            $this->database()->query("INSERT INTO pageviewcount (id, viewcount, last_visited_at) VALUES ('${id}', ${viewcount}, ${timestamp})");
+            $this->database()->query("INSERT INTO pageviewcount (id, viewcount, last_visited_at) VALUES ('$id', $viewcount, $timestamp)");
         } else {
             $viewcount = $obj->viewcount + $count;
             $timestamp = $obj->last_visited_at < $timestamp ? $timestamp : $obj->last_visited_at;
-            $this->database()->query("UPDATE pageviewcount SET viewcount = ${viewcount}, last_visited_at = ${timestamp} WHERE id='${id}'");
+            $this->database()->query("UPDATE pageviewcount SET viewcount = $viewcount, last_visited_at = $timestamp WHERE id='$id'");
         }
 
         return $viewcount;
@@ -70,7 +70,7 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
 
     public function get(string $id): ?Obj
     {
-        foreach ($this->database()->query("SELECT * from pageviewcount WHERE id='${id}'") as $obj) {
+        foreach ($this->database()->query("SELECT * from pageviewcount WHERE id='$id'") as $obj) {
             return $obj;
         }
         return null;
