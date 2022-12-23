@@ -55,7 +55,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
     ],
     'pageMethods' => [
         'counterImage' => function () {
-            $user = (kirby()->user() && option('bnomei.pageviewcounter.ignore-panel-users')) ||
+            $user = (option('bnomei.pageviewcounter.ignore-panel-users') && kirby()->users()->current()) ||
                 intval(get('ignore', 0)) === 1 ?
                 'ignore' :
                 'visitor';
