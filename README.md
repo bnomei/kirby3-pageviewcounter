@@ -39,7 +39,7 @@ Echo the tracking 1x1px image anywhere in your template.
 
 ## How it works
 
-The tracking image will be moved below the fold and trigger the counter [with native lazy loading](https://caniuse.com/#feat=loading-lazy-attr) on first user scroll. Why? To avoid most of the bots.
+The tracking image will be moved below the fold and trigger the counter [with native lazy loading](https://caniuse.com/#feat=loading-lazy-attr) on first user scroll. Why? To avoid most of the bots. It will also work for cached pages using the [pages cache](https://getkirby.com/docs/reference/system/options/cache) (even when cached [static](https://github.com/getkirby/staticache)).
 
 ## SQLite database (default)
 

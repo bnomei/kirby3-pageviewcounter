@@ -55,54 +55,51 @@ Kirby::plugin('bnomei/pageviewcounter', [
     ],
     'pageMethods' => [
         'counterImage' => function () {
-            $user = (option('bnomei.pageviewcounter.ignore-panel-users') && kirby()->users()->current()) ||
-                intval(get('ignore', 0)) === 1 ?
-                'ignore' :
-                'visitor';
-            return \Kirby\Toolkit\Html::img($this->url(
+            $url = $this->url(
                 kirby()->languages()->count() > 1 ?
-                        kirby()->languages()->first()->code() :
-                        null
-            ) . '/counter/' . time() . '/' . $user, [
-                'loading' => 'lazy',
-                'alt' => 'pageview counter pixel',
-                'style' => option('bnomei.pageviewcounter.image.style'),
-            ]);
+                    kirby()->languages()->first()->code() :
+                    null
+            );
+
+            return \Kirby\Toolkit\Html::img(
+                $url . '/counter-pixel',
+                [
+                    'loading' => 'lazy',
+                    'alt' => 'pageview counter pixel',
+                    'style' => option('bnomei.pageviewcounter.image.style'),
+                ]
+            );
         },
     ],
     'routes' => [
         [
-            'pattern' => 'counter/(:num)/(:any)',
+            'pattern' => 'counter-pixel',
             'language' => '*',
-            'action' => function ($language, $timestamp, $action = null) {
-                // single language setup
-                if (!$action) {
-                    $action = $timestamp;
-                    $timestamp = $language;
-                }
-                if ($action === 'visitor') {
+            'action' => function ($language) {
+                $hasUser = (option('bnomei.pageviewcounter.ignore-panel-users') && kirby()->user()) || intval(get('ignore', 0)) === 1;
+                if ($hasUser === false) {
                     \Bnomei\PageViewCounter::singleton()->increment(
                         site()->homePage()->id(),
-                        $timestamp
+                        time()
                     );
                 }
                 \Bnomei\PageViewCounter::singleton()->pixel();
             },
         ],
         [
-            'pattern' => '(:all)/counter/(:num)/(:any)',
+            'pattern' => '(:all)/counter-pixel',
             'language' => '*',
-            'action' => function ($language, $id, $timestamp, $action = null) {
+            'action' => function ($language, $id = null) {
                 // single language setup
-                if (!$action) {
-                    $action = $timestamp;
-                    $timestamp = $id;
+                if (!$id) {
                     $id = $language;
                 }
-                if ($action === 'visitor') {
+
+                $hasUser = (option('bnomei.pageviewcounter.ignore-panel-users') && kirby()->user()) || intval(get('ignore', 0)) === 1;
+                if ($hasUser === false) {
                     \Bnomei\PageViewCounter::singleton()->increment(
                         $id,
-                        $timestamp
+                        time()
                     );
                 }
                 \Bnomei\PageViewCounter::singleton()->pixel();
