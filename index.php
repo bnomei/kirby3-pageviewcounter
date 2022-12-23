@@ -75,7 +75,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
         [
             'pattern' => 'counter-pixel',
             'language' => '*',
-            'action' => function ($language) {
+            'action' => function ($language = null) {
                 $hasUser = (option('bnomei.pageviewcounter.ignore-panel-users') && kirby()->user()) || intval(get('ignore', 0)) === 1;
                 if ($hasUser === false) {
                     \Bnomei\PageViewCounter::singleton()->increment(
