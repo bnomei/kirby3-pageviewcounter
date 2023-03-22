@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Bnomei;
 
+use DeviceDetector\DeviceDetector;
 use Exception;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use Kirby\Toolkit\A;
 
 final class PageViewCounter
@@ -81,6 +83,28 @@ final class PageViewCounter
         \imagecolordeallocate($IMG, $background);
         \imagedestroy($IMG);
         exit;
+    }
+
+    public function willTrack(): bool
+    {
+        if (intval(get('ignore', 0)) === 1) {
+            return false;
+        }
+
+        $hasUser = option('bnomei.pageviewcounter.ignore-panel-users') && kirby()->user();
+        if ($hasUser) {
+            return false;
+        }
+
+        $useragent = A::get($_SERVER, "HTTP_USER_AGENT", '');
+        $device = new DeviceDetector($useragent);
+        $device->discardBotInformation();
+        $device->parse();
+        if ($device->isBot() || (new CrawlerDetect())->isCrawler($useragent)) {
+            return false;
+        }
+
+        return true;
     }
 
     /** @var PageViewCounter */

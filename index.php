@@ -76,14 +76,14 @@ Kirby::plugin('bnomei/pageviewcounter', [
             'pattern' => 'counter-pixel',
             'language' => '*',
             'action' => function ($language = null) {
-                $hasUser = (option('bnomei.pageviewcounter.ignore-panel-users') && kirby()->user()) || intval(get('ignore', 0)) === 1;
-                if ($hasUser === false) {
-                    \Bnomei\PageViewCounter::singleton()->increment(
+                $pvc = \Bnomei\PageViewCounter::singleton();
+                if ($pvc->willTrack()) {
+                    $pvc->increment(
                         site()->homePage()->id(),
                         time()
                     );
                 }
-                \Bnomei\PageViewCounter::singleton()->pixel();
+                $pvc->pixel();
             },
         ],
         [
@@ -95,14 +95,14 @@ Kirby::plugin('bnomei/pageviewcounter', [
                     $id = $language;
                 }
 
-                $hasUser = (option('bnomei.pageviewcounter.ignore-panel-users') && kirby()->user()) || intval(get('ignore', 0)) === 1;
-                if ($hasUser === false) {
-                    \Bnomei\PageViewCounter::singleton()->increment(
+                $pvc = \Bnomei\PageViewCounter::singleton();
+                if ($pvc->willTrack()) {
+                    $pvc->increment(
                         $id,
                         time()
                     );
                 }
-                \Bnomei\PageViewCounter::singleton()->pixel();
+                $pvc->pixel();
             },
         ],
     ],

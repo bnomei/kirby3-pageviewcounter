@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'bnomei/kirby3-pageviewcounter',
-        'pretty_version' => '1.4.1',
-        'version' => '1.4.1.0',
+        'pretty_version' => '1.5.0',
+        'version' => '1.5.0.0',
         'reference' => NULL,
         'type' => 'kirby-plugin',
         'install_path' => __DIR__ . '/../../',
@@ -11,8 +11,8 @@
     ),
     'versions' => array(
         'bnomei/kirby3-pageviewcounter' => array(
-            'pretty_version' => '1.4.1',
-            'version' => '1.4.1.0',
+            'pretty_version' => '1.5.0',
+            'version' => '1.5.0.0',
             'reference' => NULL,
             'type' => 'kirby-plugin',
             'install_path' => __DIR__ . '/../../',
@@ -27,6 +27,39 @@
             'install_path' => __DIR__ . '/../getkirby/composer-installer',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'jaybizzle/crawler-detect' => array(
+            'pretty_version' => 'v1.2.114',
+            'version' => '1.2.114.0',
+            'reference' => '62d0e6b38f6715c673e156ffb0fc894791de3452',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../jaybizzle/crawler-detect',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'matomo/device-detector' => array(
+            'pretty_version' => '6.1.1',
+            'version' => '6.1.1.0',
+            'reference' => 'a549e24350ff63e15dc691b6b21b73909b4fa9bd',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../matomo/device-detector',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'mustangostang/spyc' => array(
+            'pretty_version' => '0.6.3',
+            'version' => '0.6.3.0',
+            'reference' => '4627c838b16550b666d15aeae1e5289dd5b77da0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../mustangostang/spyc',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'piwik/device-detector' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '6.1.1',
+            ),
         ),
     ),
 );
