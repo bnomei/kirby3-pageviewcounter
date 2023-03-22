@@ -7,5 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Kirby\\' => array($vendorDir . '/getkirby/composer-installer/src'),
+    'Jaybizzle\\CrawlerDetect\\' => array($vendorDir . '/jaybizzle/crawler-detect/src'),
+    'DeviceDetector\\' => array($vendorDir . '/matomo/device-detector'),
     'Bnomei\\' => array($baseDir . '/classes'),
 );
