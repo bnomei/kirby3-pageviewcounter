@@ -31,10 +31,16 @@ Track Page view count and last visited timestamp
 
 ## Usage
 
-Echo the tracking 1x1px image anywhere in your template.
+Echo the tracking a `1px x 1px`-image or adding css anywhere in your template. Both techniques will increment the counter but technically they track in a different way.
 
+**A) via image, tracking scroll below first fold**
 ```php
 <?php echo $page->counterImage(); ?>
+```
+
+**B) via css, tracking mouse hover on body**
+```php
+<?php echo $page->counterCss(); ?>
 ```
 
 ## How it works

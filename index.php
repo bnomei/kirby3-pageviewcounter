@@ -70,6 +70,15 @@ Kirby::plugin('bnomei/pageviewcounter', [
                 ]
             );
         },
+        'counterCss' => function() {
+            $url = $this->url(
+                kirby()->languages()->count() > 1 ?
+                    kirby()->languages()->first()->code() :
+                    null
+            );
+
+            return '<style>body:hover{border-width:0;border-image: url("'.$url .'/counter-pixel")}</style>';
+        }
     ],
     'routes' => [
         [
