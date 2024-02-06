@@ -11,9 +11,9 @@
     }
   ],
   "keywords": [
-    "kirby3",
-    "kirby3-cms",
-    "kirby3-plugin",
+    "kirby",
+    "kirby-cms",
+    "kirby-plugin",
     "seo",
     "pageview",
     "tracking",
@@ -34,7 +34,7 @@
     }
   },
   "require": {
-    "php": ">=8.0",
+    "php": ">=8.1",
     "matomo/device-detector": "^6.1",
     "jaybizzle/crawler-detect": "^1.2",
     "getkirby/composer-installer": "^1.2"

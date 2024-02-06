@@ -22,6 +22,9 @@ final class PageViewCounter
         $defaults = [
             'debug' => option('debug'),
             'counter' => \option('bnomei.pageviewcounter.counter'),
+            'ignore-panel-users' => \option('bnomei.pageviewcounter.ignore-panel-users'),
+            'CrawlerDetect' => option('bnomei.pageviewcounter.botDetection.CrawlerDetect'),
+            'DeviceDetector' => option('bnomei.pageviewcounter.botDetection.DeviceDetector'),
         ];
         $this->options = array_merge($defaults, $options);
 
@@ -76,12 +79,17 @@ final class PageViewCounter
 
     public function pixel()
     {
-        $IMG = \imagecreate(1, 1);
-        $background = \imagecolorallocate($IMG, 0, 0, 0);
-        \header("Content-type: image/png");
-        \imagepng($IMG);
-        \imagecolordeallocate($IMG, $background);
-        \imagedestroy($IMG);
+        try {
+            $IMG = \imagecreate(1, 1);
+            $background = \imagecolorallocate($IMG, 0, 0, 0);
+            \header("Content-type: image/png");
+            \imagepng($IMG);
+            \imagecolordeallocate($IMG, $background);
+            \imagedestroy($IMG);
+        } catch (Exception $e) {
+            \header("Content-type: text/plain");
+            echo $e->getMessage();
+        }
         exit;
     }
 
@@ -91,17 +99,27 @@ final class PageViewCounter
             return false;
         }
 
-        $hasUser = option('bnomei.pageviewcounter.ignore-panel-users') && kirby()->user();
+        $hasUser = $this->option('ignore-panel-users') && kirby()->user();
         if ($hasUser) {
             return false;
         }
 
         $useragent = A::get($_SERVER, "HTTP_USER_AGENT", '');
-        $device = new DeviceDetector($useragent);
-        $device->discardBotInformation();
-        $device->parse();
-        if ($device->isBot() || (new CrawlerDetect())->isCrawler($useragent)) {
-            return false;
+
+        if ($this->option('CrawlerDetect')) {
+            $isCrawler = (new CrawlerDetect())->isCrawler($useragent);
+            if ($isCrawler) {
+                return false;
+            }
+        }
+
+        if ($this->option('DeviceDetector')) {
+            $device = new DeviceDetector($useragent);
+            $device->discardBotInformation();
+            $device->parse();
+            if ($device->isBot()) {
+                return false;
+            }
         }
 
         return true;

@@ -16,6 +16,10 @@ Kirby::plugin('bnomei/pageviewcounter', [
             'count' => 'viewcount',
             'timestamp' => 'lastvisited',
         ],
+        'botDetection' => [
+            'CrawlerDetect' => true, // almost no overhead, ~10ms
+            'DeviceDetector' => true, // ~40ms
+        ],
         'sqlite' => [
             'file' => function () {
                 $old = realpath(kirby()->roots()->accounts() . '/../') . '/pageviewcounter.sqlite';
@@ -70,7 +74,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
                 ]
             );
         },
-        'counterCss' => function() {
+        'counterCss' => function () {
             $url = $this->url(
                 kirby()->languages()->count() > 1 ?
                     kirby()->languages()->first()->code() :

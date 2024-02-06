@@ -136,6 +136,8 @@ return [
 | field.sqlite.file | `fn()` | callback. returns filepath to sqlite file |
 | field.field.count | `viewcount` | string. name of field in page blueprint |
 | field.field.timestamp | `lastvisited` | string. name of field in page blueprint |
+| botDetection.CrawlerDetect   | `true`  | check for crawlers (~10ms)                                                        |
+| botDetection.DeviceDetector   | `true`  | check for bots (~40ms)                                                                     |
 
 ## Disclaimer
 
