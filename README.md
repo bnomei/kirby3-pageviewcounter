@@ -1,11 +1,13 @@
 # Kirby Pageview Counter
 
-![Release](https://flat.badgen.net/packagist/v/bnomei/kirby3-pageviewcounter?color=ae81ff)
-![Downloads](https://flat.badgen.net/packagist/dt/bnomei/kirby3-pageviewcounter?color=272822)
-[![Build Status](https://flat.badgen.net/travis/bnomei/kirby3-pageviewcounter)](https://travis-ci.com/bnomei/kirby3-pageviewcounter)
-[![Coverage Status](https://flat.badgen.net/coveralls/c/github/bnomei/kirby3-pageviewcounter)](https://coveralls.io/github/bnomei/kirby3-pageviewcounter) 
-[![Maintainability](https://flat.badgen.net/codeclimate/maintainability/bnomei/kirby3-pageviewcounter)](https://codeclimate.com/github/bnomei/kirby3-pageviewcounter) 
-[![Twitter](https://flat.badgen.net/badge/twitter/bnomei?color=66d9ef)](https://twitter.com/bnomei)
+[![Kirby 5](https://flat.badgen.net/badge/Kirby/5?color=ECC748)](https://getkirby.com)
+![PHP 8.2](https://flat.badgen.net/badge/PHP/8.2?color=4E5B93&icon=php&label)
+![Release](https://flat.badgen.net/packagist/v/bnomei/kirby3-pageviewcounter?color=ae81ff&icon=github&label)
+![Downloads](https://flat.badgen.net/packagist/dt/bnomei/kirby3-pageviewcounter?color=272822&icon=github&label)
+[![Coverage](https://flat.badgen.net/codeclimate/coverage/bnomei/kirby3-pageviewcounter?icon=codeclimate&label)](https://codeclimate.com/github/bnomei/kirby3-pageviewcounter)
+[![Maintainability](https://flat.badgen.net/codeclimate/maintainability/bnomei/kirby3-pageviewcounter?icon=codeclimate&label)](https://codeclimate.com/github/bnomei/kirby3-pageviewcounter/issues)
+[![Discord](https://flat.badgen.net/badge/discord/bnomei?color=7289da&icon=discord&label)](https://discordapp.com/users/bnomei)
+[![Buymecoffee](https://flat.badgen.net/badge/icon/donate?icon=buymeacoffee&color=FF813F&label)](https://www.buymeacoffee.com/bnomei)
 
 Track Page view count and last visited timestamp
 
@@ -49,6 +51,7 @@ fields:
     # format: 'DD-MM-YYYY'
 ```
 
+> [!TIP]
 > Kirby has *day.js* built in which you can use to [format your date](https://day.js.org/docs/en/display/format) output.
 
 You do not have to add anything to you config files. But you could make some changes to the defaults, like the path to the sqlite file if you wanted to.
@@ -111,7 +114,8 @@ return [
 ];
 ```
 
-> NOTE: Be warned that Page Fields might not work well for concurrent requests.
+> [!WARNING]
+> Be warned that Page Fields might not work well for concurrent requests.
 
 ## Settings
 

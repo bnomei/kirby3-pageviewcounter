@@ -4,35 +4,35 @@ declare(strict_types=1);
 
 namespace Bnomei;
 
+use Closure;
 use Kirby\Database\Database;
 use Kirby\Filesystem\F;
-use Kirby\Toolkit\Collection;
 use Kirby\Toolkit\Obj;
+
+use function option;
 
 class PageViewCounterSQLite implements PageViewCountIncrementor
 {
-    /** @var Database */
-    private $database;
+    private Database $database;
 
-    /** @var array */
-    private $options;
+    private array $options;
 
     public function __construct(array $options = [])
     {
         $this->options = array_merge([
-            'file' => \option('bnomei.pageviewcounter.sqlite.file'),
+            'file' => option('bnomei.pageviewcounter.sqlite.file'),
         ], $options);
 
         foreach ($this->options as $key => $call) {
-            if (!is_string($call) && is_callable($call) && in_array($key, ['file'])) {
+            if ($call instanceof Closure && in_array($key, ['file'])) {
                 $this->options[$key] = $call();
             }
         }
 
         $target = $this->options['file'];
-        if (!F::exists($target)) {
+        if (! F::exists($target)) {
             $db = new \SQLite3($target);
-            $db->exec("CREATE TABLE IF NOT EXISTS pageviewcount (id TEXT primary key unique, viewcount INTEGER, last_visited_at INTEGER)");
+            $db->exec('CREATE TABLE IF NOT EXISTS pageviewcount (id TEXT primary key unique, viewcount INTEGER, last_visited_at INTEGER)');
             $db->close();
         }
 
@@ -73,18 +73,21 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
         foreach ($this->database()->query("SELECT * from pageviewcount WHERE id='$id'") as $obj) {
             return $obj;
         }
+
         return null;
     }
 
     public function count(string $id): int
     {
         $obj = $this->get($id);
+
         return $obj ? intval($obj->viewcount) : 0;
     }
 
     public function timestamp(string $id): int
     {
         $obj = $this->get($id);
+
         return $obj ? intval($obj->last_visited_at) : 0;
     }
 }

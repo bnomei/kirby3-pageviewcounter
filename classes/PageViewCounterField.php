@@ -5,23 +5,23 @@ declare(strict_types=1);
 namespace Bnomei;
 
 use Kirby\Cms\Page;
-use Kirby\Toolkit\F;
+use Kirby\Content\Field;
+
+use function option;
 
 class PageViewCounterField implements PageViewCountIncrementor
 {
-    /** @var string $fieldcount */
-    private $fieldcount;
+    private string $fieldcount;
 
-    /** @var string $fieldtimestamp */
-    private $fieldtimestamp;
+    private string $fieldtimestamp;
 
     public function __construct()
     {
-        $this->fieldcount = \option('bnomei.pageviewcounter.field.count');
-        $this->fieldtimestamp = \option('bnomei.pageviewcounter.field.timestamp');
+        $this->fieldcount = strval(option('bnomei.pageviewcounter.field.count'));
+        $this->fieldtimestamp = strval(option('bnomei.pageviewcounter.field.timestamp'));
     }
 
-    private function pageFromID($id): ?Page
+    private function pageFromID(?string $id = null): ?Page
     {
         return function_exists('bolt') ? \bolt($id) : \page($id);
     }
@@ -29,7 +29,7 @@ class PageViewCounterField implements PageViewCountIncrementor
     public function increment(string $id, int $timestamp, int $count = 1): ?int
     {
         $page = $this->pageFromID($id);
-        if (!$page) {
+        if (! $page) {
             return null;
         }
 
@@ -37,22 +37,25 @@ class PageViewCounterField implements PageViewCountIncrementor
         $current[$this->fieldcount] += $count;
         $current[$this->fieldtimestamp] = $current[$this->fieldtimestamp] < $timestamp ? $timestamp : $current[$this->fieldtimestamp];
 
-        kirby()->impersonate('kirby');
-        $this->page = $page->update($current);
+        $page = kirby()->impersonate('kirby', function () use ($page, $current) {
+            return $page->update($current);
+        });
 
         return $current[$this->fieldcount];
     }
 
-    public function get(string $id): ?array
+    public function get(string $id): array
     {
         $page = $this->pageFromID($id);
+        /** @var Field $field */
         $field = $page->{$this->fieldcount}();
         if ($field->isNotEmpty()) {
             return [
-                $this->fieldcount => $field->toInt(),
+                $this->fieldcount => $field->toInt(), // @phpstan-ignore-line
                 $this->fieldtimestamp => $page->{$this->fieldtimestamp}()->toInt(),
             ];
         }
+
         return [
             $this->fieldcount => 0,
             $this->fieldtimestamp => 0,

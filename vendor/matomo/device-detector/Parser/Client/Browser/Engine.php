@@ -45,6 +45,7 @@ class Engine extends AbstractClientParser
         'iCab',
         'Elektra',
         'Presto',
+        'Clecko',
         'Gecko',
         'KHTML',
         'NetFront',
@@ -53,6 +54,8 @@ class Engine extends AbstractClientParser
         'Servo',
         'Goanna',
         'EkiohFlow',
+        'Arachne',
+        'LibWeb',
     ];
 
     /**

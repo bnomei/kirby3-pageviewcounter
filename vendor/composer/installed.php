@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'bnomei/kirby3-pageviewcounter',
-        'pretty_version' => '1.7.1',
-        'version' => '1.7.1.0',
+        'pretty_version' => '5.0.0',
+        'version' => '5.0.0.0',
         'reference' => null,
         'type' => 'kirby-plugin',
         'install_path' => __DIR__ . '/../../',
@@ -11,8 +11,8 @@
     ),
     'versions' => array(
         'bnomei/kirby3-pageviewcounter' => array(
-            'pretty_version' => '1.7.1',
-            'version' => '1.7.1.0',
+            'pretty_version' => '5.0.0',
+            'version' => '5.0.0.0',
             'reference' => null,
             'type' => 'kirby-plugin',
             'install_path' => __DIR__ . '/../../',
@@ -29,18 +29,18 @@
             'dev_requirement' => false,
         ),
         'jaybizzle/crawler-detect' => array(
-            'pretty_version' => 'v1.2.116',
-            'version' => '1.2.116.0',
-            'reference' => '97e9fe30219e60092e107651abb379a38b342921',
+            'pretty_version' => 'v1.3.0',
+            'version' => '1.3.0.0',
+            'reference' => 'be155e11613fa618aa18aee438955588d1092a47',
             'type' => 'library',
             'install_path' => __DIR__ . '/../jaybizzle/crawler-detect',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'matomo/device-detector' => array(
-            'pretty_version' => '6.2.1',
-            'version' => '6.2.1.0',
-            'reference' => '19138b0c4b9ddf4ffd8e423d6af3764b7317cb0b',
+            'pretty_version' => '6.4.1',
+            'version' => '6.4.1.0',
+            'reference' => '0d364e0dd6c177da3c24cd4049178026324fd7ac',
             'type' => 'library',
             'install_path' => __DIR__ . '/../matomo/device-detector',
             'aliases' => array(),
@@ -58,7 +58,7 @@
         'piwik/device-detector' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '6.2.1',
+                0 => '6.4.1',
             ),
         ),
     ),

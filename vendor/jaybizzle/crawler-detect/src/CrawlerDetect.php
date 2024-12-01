@@ -76,7 +76,7 @@ class CrawlerDetect
     /**
      * Class constructor.
      */
-    public function __construct(array $headers = null, $userAgent = null)
+    public function __construct(?array $headers = null, $userAgent = null)
     {
         $this->crawlers = new Crawlers();
         $this->exclusions = new Exclusions();
@@ -169,6 +169,8 @@ class CrawlerDetect
         ));
 
         if ($agent === '') {
+            $this->matches = array();
+
             return false;
         }
 

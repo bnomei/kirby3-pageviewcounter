@@ -68,7 +68,7 @@ class DeviceDetector
     /**
      * Current version number of DeviceDetector
      */
-    public const VERSION = '6.2.1';
+    public const VERSION = '6.4.1';
 
     /**
      * Constant used as value for unknown browser / os
@@ -776,7 +776,7 @@ class DeviceDetector
      */
     protected function hasAndroidTableFragment(): bool
     {
-        $regex = 'Android( [\.0-9]+)?; Tablet;';
+        $regex = 'Android( [\.0-9]+)?; Tablet;|Tablet(?! PC)|.*\-tablet$';
 
         return !!$this->matchUserAgent($regex);
     }
@@ -788,7 +788,19 @@ class DeviceDetector
      */
     protected function hasAndroidMobileFragment(): bool
     {
-        $regex = 'Android( [\.0-9]+)?; Mobile;';
+        $regex = 'Android( [\.0-9]+)?; Mobile;|.*\-mobile$';
+
+        return !!$this->matchUserAgent($regex);
+    }
+
+    /**
+     * Returns if the parsed UA contains the 'Android; Mobile VR;' fragment
+     *
+     * @return bool
+     */
+    protected function hasAndroidVRFragment(): bool
+    {
+        $regex = 'Android( [\.0-9]+)?; Mobile VR;| VR ';
 
         return !!$this->matchUserAgent($regex);
     }
@@ -910,15 +922,16 @@ class DeviceDetector
             $this->brand = $vendorParser->parse()['brand'] ?? '';
         }
 
-        $osName     = $this->getOsAttribute('name');
-        $osFamily   = $this->getOsAttribute('family');
-        $osVersion  = $this->getOsAttribute('version');
-        $clientName = $this->getClientAttribute('name');
+        $osName       = $this->getOsAttribute('name');
+        $osFamily     = $this->getOsAttribute('family');
+        $osVersion    = $this->getOsAttribute('version');
+        $clientName   = $this->getClientAttribute('name');
+        $appleOsNames = ['iPadOS', 'tvOS', 'watchOS', 'iOS', 'Mac'];
 
         /**
-         * if it's fake UA then it's best not to identify it as Apple running Android OS
+         * if it's fake UA then it's best not to identify it as Apple running Android OS or GNU/Linux
          */
-        if ('Android' === $osName && 'Apple' === $this->brand) {
+        if ('Apple' === $this->brand && !\in_array($osName, $appleOsNames)) {
             $this->device = null;
             $this->brand  = '';
             $this->model  = '';
@@ -927,14 +940,14 @@ class DeviceDetector
         /**
          * Assume all devices running iOS / Mac OS are from Apple
          */
-        if (empty($this->brand) && \in_array($osName, ['iPadOS', 'tvOS', 'watchOS', 'iOS', 'Mac'])) {
+        if (empty($this->brand) && \in_array($osName, $appleOsNames)) {
             $this->brand = 'Apple';
         }
 
         /**
          * All devices containing VR fragment are assumed to be a wearable
          */
-        if (null === $this->device && $this->matchUserAgent(' VR ')) {
+        if (null === $this->device && $this->hasAndroidVRFragment()) {
             $this->device = AbstractDeviceParser::DEVICE_TYPE_WEARABLE;
         }
 
@@ -948,9 +961,9 @@ class DeviceDetector
         if (null === $this->device && 'Android' === $osFamily
             && $this->matchUserAgent('Chrome/[\.0-9]*')
         ) {
-            if ($this->matchUserAgent('(?:Mobile|eliboM) Safari/')) {
+            if ($this->matchUserAgent('(?:Mobile|eliboM)')) {
                 $this->device = AbstractDeviceParser::DEVICE_TYPE_SMARTPHONE;
-            } elseif ($this->matchUserAgent('(?!Mobile )Safari/')) {
+            } else {
                 $this->device = AbstractDeviceParser::DEVICE_TYPE_TABLET;
             }
         }
@@ -1027,6 +1040,27 @@ class DeviceDetector
         }
 
         /**
+         * All devices running Puffin Secure Browser that contain letter 'D' are assumed to be desktops
+         */
+        if (null === $this->device && $this->matchUserAgent('Puffin/(?:\d+[.\d]+)[LMW]D')) {
+            $this->device = AbstractDeviceParser::DEVICE_TYPE_DESKTOP;
+        }
+
+        /**
+         * All devices running Puffin Web Browser that contain letter 'P' are assumed to be smartphones
+         */
+        if (null === $this->device && $this->matchUserAgent('Puffin/(?:\d+[.\d]+)[AIFLW]P')) {
+            $this->device = AbstractDeviceParser::DEVICE_TYPE_SMARTPHONE;
+        }
+
+        /**
+         * All devices running Puffin Web Browser that contain letter 'T' are assumed to be tablets
+         */
+        if (null === $this->device && $this->matchUserAgent('Puffin/(?:\d+[.\d]+)[AILW]T')) {
+            $this->device = AbstractDeviceParser::DEVICE_TYPE_TABLET;
+        }
+
+        /**
          * All devices running Opera TV Store are assumed to be a tv
          */
         if ($this->matchUserAgent('Opera TV Store| OMI/')) {
@@ -1036,7 +1070,7 @@ class DeviceDetector
         /**
          * All devices that contain Andr0id in string are assumed to be a tv
          */
-        if ($this->matchUserAgent('Andr0id|(?:Android(?: UHD)?|Google) TV|\(lite\) TV|BRAVIA')) {
+        if ($this->matchUserAgent('Andr0id|(?:Android(?: UHD)?|Google) TV|\(lite\) TV|BRAVIA| TV$')) {
             $this->device = AbstractDeviceParser::DEVICE_TYPE_TV;
         }
 
@@ -1048,11 +1082,11 @@ class DeviceDetector
         }
 
         /**
-         * Devices running those browsers are assumed to be a TV
+         * Devices running those clients are assumed to be a TV
          */
         if (\in_array($clientName, [
             'Kylo', 'Espial TV Browser', 'LUJO TV Browser', 'LogicUI TV Browser', 'Open TV Browser', 'Seraphic Sraf',
-            'Opera Devices',
+            'Opera Devices', 'Crow Browser', 'Vewd Browser', 'TiviMate', 'Quick Search TV', 'QJY TV Browser', 'TV Bro',
         ])
         ) {
             $this->device = AbstractDeviceParser::DEVICE_TYPE_TV;

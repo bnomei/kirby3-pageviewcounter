@@ -2,7 +2,7 @@
   "name": "bnomei/kirby3-pageviewcounter",
   "description": "Track Page view count and last visited timestamp",
   "type": "kirby-plugin",
-  "version": "1.7.1",
+  "version": "5.0.0",
   "license": "MIT",
   "authors": [
     {
@@ -21,38 +21,38 @@
     "cache",
     "sqlite"
   ],
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true,
+    "allow-plugins": {
+      "getkirby/composer-installer": true,
+      "pestphp/pest-plugin": true
+    }
+  },
   "autoload": {
     "psr-4": {
       "Bnomei\\": "classes/"
     }
   },
-  "config": {
-    "optimize-autoloader": true,
-    "sort-packages": true,
-    "allow-plugins": {
-      "getkirby/composer-installer": true
-    }
-  },
   "require": {
-    "php": ">=8.1",
-    "matomo/device-detector": "^6.1",
+    "php": ">=8.2",
+    "getkirby/composer-installer": "^1.2",
     "jaybizzle/crawler-detect": "^1.2",
-    "getkirby/composer-installer": "^1.2"
+    "matomo/device-detector": "^6.1"
   },
   "require-dev": {
-    "getkirby/cms": "^4.0.0-rc.2",
-    "php-coveralls/php-coveralls": "^2.1",
-    "phpunit/phpunit": "^9.5"
+    "getkirby/cms": "^5.0.0-alpha.4",
+    "larastan/larastan": "^v3.0.0",
+    "laravel/pint": "^1.13",
+    "pestphp/pest": "^v3.5.1",
+    "spatie/ray": "^1.39"
   },
   "scripts": {
-    "analyze": "phpstan analyse classes",
-    "fix": "php-cs-fixer fix",
-    "test": [
-      "mkdir -p tests/logs",
-      "@putenv XDEBUG_MODE=coverage",
-      "phpunit --configuration ./phpunit.xml"
-    ],
+    "stan": "./vendor/bin/phpstan",
+    "fix": "./vendor/bin/pint",
+    "test": "./vendor/bin/pest --profile",
     "dist": [
+      "composer fix",
       "composer install --no-dev --optimize-autoloader",
       "git rm -rf --cached .; git add .;"
     ],
@@ -60,7 +60,9 @@
       "composer install",
       "composer update",
       "composer install --working-dir=tests/kirby --no-dev --optimize-autoloader",
-      "composer update --working-dir=tests/kirby"
+      "composer update --working-dir=tests/kirby",
+      "sed -i.bak 's/function dump(/function xdump(/g' tests/kirby/config/helpers.php",
+      "sed -i.bak 's/function e(/function xe(/g' tests/kirby/config/helpers.php"
     ]
   },
   "extra": {
