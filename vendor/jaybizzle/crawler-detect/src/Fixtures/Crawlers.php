@@ -18,7 +18,7 @@ class Crawlers extends AbstractProvider
      *
      * @var array
      */
-    protected $data = array(
+    protected $data = [
         ' YLT',
         '^Aether',
         '^Amazon Simple Notification Service Agent$',
@@ -59,6 +59,7 @@ class Crawlers extends AbstractProvider
         '^pnpm\/',
         '^RMA\/',
         '^Ruby|Ruby\/[0-9]',
+        "^symbolicator\\/",
         '^Swurl ',
         '^TLS tester ',
         '^twine\/',
@@ -169,6 +170,7 @@ class Crawlers extends AbstractProvider
         'Badass',
         'baidu\.com',
         'Bandit',
+        'Barracuda Sentinel \(EE\)',
         'basicstate',
         'BatchFTP',
         'Battleztar Bazinga',
@@ -222,6 +224,7 @@ class Crawlers extends AbstractProvider
         'Butterfly\/',
         'BuzzSumo',
         'CAAM\/[0-9]',
+        'caam dot crwlr at gmail dot com',
         'CakePHP',
         'Calculon',
         'Canary%20Mail',
@@ -559,7 +562,7 @@ class Crawlers extends AbstractProvider
         'http-request\/',
         'HTTP-Tiny',
         'HTTP::Lite',
-        'http:\/\/www.neomo.de\/', //'Francis [Bot]'
+        'http:\/\/www.neomo.de\/', // 'Francis [Bot]'
         'HttpComponents',
         'httphr',
         'HTTPie',
@@ -744,6 +747,7 @@ class Crawlers extends AbstractProvider
         'masscan\/',
         'Mata Hari',
         'mattermost',
+        'MatchorySearch\/',
         'Mediametric',
         'Mediapartners-Google',
         'mediawords',
@@ -1430,5 +1434,5 @@ class Crawlers extends AbstractProvider
         'ZoteroTranslationServer',
         'ZyBorg',
         '[a-z0-9\-_]*(bot|crawl|archiver|transcoder|spider|uptime|validator|fetcher|cron|checker|reader|extractor|monitoring|analyzer|scraper)',
-    );
+    ];
 }

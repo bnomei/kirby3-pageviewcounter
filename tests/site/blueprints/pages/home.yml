@@ -1,8 +1,18 @@
-fields:
-  counter:
-    label: Page view count
-    type: viewcount
-  lastvisited:
-    label: Page last visited
-    type: lastvisited
-    # format: 'DD-MM-YYYY' # https://day.js.org/docs/en/display/format
+sections:
+  stats:
+    type: stats
+    reports:
+      - label: View Count of Page
+        value: "{{ page.pageviewcount }}"
+      - label: View Count with Children
+        value: "{{ page.children.pageviewcount(page.pageviewcount) }}"
+  content:
+    type: fields
+    fields:
+      counter:
+        label: Page view count
+        type: viewcount
+      lastvisited:
+        label: Page last visited
+        type: lastvisited
+        # format: 'DD-MM-YYYY' # https://day.js.org/docs/en/display/format
