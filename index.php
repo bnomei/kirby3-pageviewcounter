@@ -57,7 +57,24 @@ Kirby::plugin('bnomei/pageviewcounter', [
             ],
         ],
     ],
+    'pagesMethods' => [
+        'pageviewcount' => function (int $base = 0): int {
+            $count = $base;
+            foreach ($this as $page) {
+                /** @var \Kirby\Cms\Page $page */
+                $count += $page->pageviewcount();
+                if ($page->hasChildren()) {
+                    $count += $page->children()->pageviewcount();
+                }
+            }
+
+            return $count;
+        },
+    ],
     'pageMethods' => [
+        'pageviewcount' => function (): int {
+            return \Bnomei\PageViewCounter::singleton()->count($this->id()); // id NOT uuid!
+        },
         'counterImage' => function () {
             $url = $this->url(
                 kirby()->languages()->count() > 1 ?
