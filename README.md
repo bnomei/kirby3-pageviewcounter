@@ -129,7 +129,7 @@ sections:
     reports:
      - label: View count of page
        value: "{{ page.pageviewcount }}"
-     - label: View count of page with count of children
+     - label: View count of children + count of page itself
        value: "{{ page.children.pageviewcount(page.pageviewcount) }}"
      - label: Last visited
        value: "{{ page.pagelastvisited }}" # page.pagelastvisited('Y-m-d H:i:s')
