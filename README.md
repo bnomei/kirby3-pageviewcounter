@@ -37,10 +37,19 @@ The tracking image will be moved below the fold and trigger the counter [with na
 
 ## SQLite database (default)
 
-To view the tracked count and timestamp this plugin provides two optional fields.
+To view the tracked count and timestamp this plugin provides two optional fields, and  two pagemethods.
 
 **in your page blueprint**
 ```yml
+ stats:
+     type: stats
+     reports:
+         - label: View Count of Page
+           value: "{{ page.pageviewcount }}"
+         - label: View Count with Children
+           value: "{{ page.children.pageviewcount(page.pageviewcount) }}"
+         - label: Last Visited
+           value: "{{ page.lastvisited(Y-m-d H:i:s) }}" # for format options see https://www.php.net/manual/en/function.date.php
 fields:
   counter:
     label: Page view count
