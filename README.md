@@ -37,19 +37,10 @@ The tracking image will be moved below the fold and trigger the counter [with na
 
 ## SQLite database (default)
 
-To view the tracked count and timestamp this plugin provides two optional fields, and  two pagemethods.
+To view the tracked count and timestamp this plugin provides two optional fields (`viewcount` and `lastvisited`).
 
 **in your page blueprint**
 ```yml
- stats:
-     type: stats
-     reports:
-         - label: View Count of Page
-           value: "{{ page.pageviewcount }}"
-         - label: View Count with Children
-           value: "{{ page.children.pageviewcount(page.pageviewcount) }}"
-         - label: Last Visited
-           value: "{{ page.lastvisited(Y-m-d H:i:s) }}" # for format options see https://www.php.net/manual/en/function.date.php
 fields:
   counter:
     label: Page view count
@@ -125,6 +116,30 @@ return [
 
 > [!WARNING]
 > Be warned that Page Fields might not work well for concurrent requests.
+
+## Usage in Stats section via page-methods
+
+Thanks to an PR by @TinQ0 it's also possible to use the tracked count and timestamp in sections like Pages or Stats.
+
+**in your page blueprint**
+```yml
+sections:
+  stats:
+    type: stats
+    reports:
+     - label: View count of page
+       value: "{{ page.pageviewcount }}"
+     - label: View count of page with count of children
+       value: "{{ page.children.pageviewcount(page.pageviewcount) }}"
+     - label: Last visited
+       value: "{{ page.pagelastvisited }}" # page.pagelastvisited('Y-m-d H:i:s')
+  pages:
+    type: pages
+    info: "{{ page.pageviewcount }}" # show view count of each page
+```
+
+> [!NOTE]
+> The `pageviewcount`/`pagelastvisited` methods on the page object are prefix with `page*` to avoid clashing with the plain fields `viewcount`/`lastvisited` from the *page field*-setup variation.
 
 ## Settings
 
