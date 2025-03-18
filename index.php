@@ -75,6 +75,9 @@ Kirby::plugin('bnomei/pageviewcounter', [
         'pageviewcount' => function (): int {
             return \Bnomei\PageViewCounter::singleton()->count($this->id()); // id NOT uuid!
         },
+        'lastvisited' => function ($format = 'c'): string { //for format options see https://www.php.net/manual/en/function.date.php
+            return date($format, \Bnomei\PageViewCounter::singleton()->timestamp($this->id())); // id NOT uuid!
+        },
         'counterImage' => function () {
             $url = $this->url(
                 kirby()->languages()->count() > 1 ?
