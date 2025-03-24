@@ -54,15 +54,23 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
 
     public function increment(string $id, int $timestamp, int $count = 1): ?int
     {
-        $obj = $this->get($id);
+        $this->database()->execute('BEGIN;');
+        try {
+            $obj = $this->get($id);
 
-        if ($obj === null) {
-            $viewcount = $count;
-            $this->database()->query("INSERT INTO pageviewcount (id, viewcount, last_visited_at) VALUES ('$id', $viewcount, $timestamp)");
-        } else {
-            $viewcount = $obj->viewcount + $count;
-            $timestamp = $obj->last_visited_at < $timestamp ? $timestamp : $obj->last_visited_at;
-            $this->database()->query("UPDATE pageviewcount SET viewcount = $viewcount, last_visited_at = $timestamp WHERE id='$id'");
+            if ($obj === null) {
+                $viewcount = $count;
+                $this->database()->query("INSERT INTO pageviewcount (id, viewcount, last_visited_at) VALUES ('$id', $viewcount, $timestamp)");
+            } else {
+                $viewcount = $obj->viewcount + $count;
+                $timestamp = $obj->last_visited_at < $timestamp ? $timestamp : $obj->last_visited_at;
+                $this->database()->query("UPDATE pageviewcount SET viewcount = $viewcount, last_visited_at = $timestamp WHERE id='$id'");
+            }
+            $this->database()->execute('COMMIT;');
+        } catch (\Exception $e) {
+            $this->database()->execute('ROLLBACK;');
+            usleep(100);
+            $viewcount = $this->increment($id, $timestamp, $count);
         }
 
         return $viewcount;
