@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'bnomei/kirby3-pageviewcounter',
-        'pretty_version' => '5.3.0',
-        'version' => '5.3.0.0',
+        'pretty_version' => '5.3.1',
+        'version' => '5.3.1.0',
         'reference' => null,
         'type' => 'kirby-plugin',
         'install_path' => __DIR__ . '/../../',
@@ -11,8 +11,8 @@
     ),
     'versions' => array(
         'bnomei/kirby3-pageviewcounter' => array(
-            'pretty_version' => '5.3.0',
-            'version' => '5.3.0.0',
+            'pretty_version' => '5.3.1',
+            'version' => '5.3.1.0',
             'reference' => null,
             'type' => 'kirby-plugin',
             'install_path' => __DIR__ . '/../../',

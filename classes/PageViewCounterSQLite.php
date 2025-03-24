@@ -54,8 +54,8 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
 
     public function increment(string $id, int $timestamp, int $count = 1): ?int
     {
-        $this->database()->execute('BEGIN;');
         try {
+            $this->database()->execute('BEGIN;');
             $obj = $this->get($id);
 
             if ($obj === null) {
