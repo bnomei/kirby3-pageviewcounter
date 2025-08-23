@@ -494,6 +494,7 @@ class Browser extends AbstractClientParser
         'PP' => 'Oppo Browser',
         'P6' => 'Opus Browser',
         'PR' => 'Palm Pre',
+        '2E' => 'Pocket Internet Explorer',
         '7I' => 'Puffin Cloud Browser',
         '6I' => 'Puffin Incognito Browser',
         'PU' => 'Puffin Secure Browser',
@@ -545,6 +546,8 @@ class Browser extends AbstractClientParser
         'QS' => 'Quick Browser',
         'QT' => 'Qutebrowser',
         'QU' => 'Quark',
+        'Q6' => 'QuarkPC',
+        'Q7' => 'Quetta',
         'QZ' => 'QupZilla',
         'QM' => 'Qwant Mobile',
         'Q5' => 'QtWeb',
@@ -773,7 +776,7 @@ class Browser extends AbstractClientParser
             'M9', 'F9', '0P', '0A', 'JR', 'D3', 'TK', 'BP', '2F',
             '2M', 'K7', '1N', '8A', 'H7', 'X3', 'T4', 'X4', '5O',
             '8C', '3M', '6I', '2P', 'PU', '7I', 'X5', 'AL', '3P',
-            'W2', 'ZB', 'HN',
+            'W2', 'ZB', 'HN', 'Q6', 'Q7',
         ],
         'Firefox'            => [
             'FF', 'BI', 'BF', 'BH', 'BN', 'C0', 'CU', 'EI', 'F1',
@@ -783,7 +786,7 @@ class Browser extends AbstractClientParser
             'FP', 'AD', '2I', 'P9', 'KJ', 'WY', 'VK', 'W5',
             '7C', 'N7', 'W7',
         ],
-        'Internet Explorer'  => ['IE', 'CZ', 'BZ', 'IM', 'PS', '3A', '4A', 'RN'],
+        'Internet Explorer'  => ['IE', 'CZ', 'BZ', 'IM', 'PS', '3A', '4A', 'RN', '2E'],
         'Konqueror'          => ['KO'],
         'NetFront'           => ['NF'],
         'NetSurf'            => ['NE'],
@@ -822,7 +825,7 @@ class Browser extends AbstractClientParser
         'DP', 'KL', 'K4', 'N6', 'KU', 'WK', 'M8', 'UP', 'ZT',
         '9P', 'N8', 'VR', 'N9', 'M9', 'F9', '0P', '0A', '2F',
         '2M', 'K7', '1N', '8A', 'H7', 'X3', 'X4', '5O', '6I',
-        '7I', 'X5', '3P',
+        '7I', 'X5', '3P', '2E',
     ];
 
     /**
