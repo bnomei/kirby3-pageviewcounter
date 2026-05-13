@@ -1,5 +1,10 @@
 <?php
 
+use Bnomei\PageViewCounter;
+use Bnomei\PageViewCounterSQLite;
+use Kirby\Cms\Page;
+use Kirby\Toolkit\Html;
+
 @include_once __DIR__.'/vendor/autoload.php';
 
 Kirby::plugin('bnomei/pageviewcounter', [
@@ -7,7 +12,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
         'ignore-panel-users' => true,
         'counter' => function () {
             // return new \Bnomei\PageViewCounterField();
-            return new \Bnomei\PageViewCounterSQLite;
+            return new PageViewCounterSQLite;
         },
         'image' => [
             'style' => 'position: absolute; top: 100vh; left: 0; pointer-events: none; height: 1px; width: 1px; opacity: 0;',
@@ -40,7 +45,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
         'viewcount' => [
             'computed' => [
                 'value' => function () {
-                    return \Bnomei\PageViewCounter::singleton()->count($this->model()->id());
+                    return PageViewCounter::singleton()->count($this->model()->id());
                 },
             ],
         ],
@@ -52,7 +57,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
             ],
             'computed' => [
                 'value' => function () {
-                    return date('c', \Bnomei\PageViewCounter::singleton()->timestamp($this->model()->id()));
+                    return date('c', PageViewCounter::singleton()->timestamp($this->model()->id()));
                 },
             ],
         ],
@@ -61,7 +66,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
         'pageviewcount' => function (int $base = 0): int {
             $count = $base;
             foreach ($this as $page) {
-                /** @var \Kirby\Cms\Page $page */
+                /** @var Page $page */
                 $count += $page->pageviewcount();
                 if ($page->hasChildren()) {
                     $count += $page->children()->pageviewcount();
@@ -73,10 +78,10 @@ Kirby::plugin('bnomei/pageviewcounter', [
     ],
     'pageMethods' => [
         'pageviewcount' => function (): int {
-            return \Bnomei\PageViewCounter::singleton()->count($this->id()); // id NOT uuid!
+            return PageViewCounter::singleton()->count($this->id()); // id NOT uuid!
         },
         'pagelastvisited' => function ($format = 'c'): string {
-            return date($format, \Bnomei\PageViewCounter::singleton()->timestamp($this->id())); // id NOT uuid!
+            return date($format, PageViewCounter::singleton()->timestamp($this->id())); // id NOT uuid!
         },
         'counterImage' => function () {
             $url = $this->url(
@@ -85,7 +90,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
                     null
             );
 
-            return \Kirby\Toolkit\Html::img(
+            return Html::img(
                 $url.'/counter-pixel',
                 [
                     'loading' => 'lazy',
@@ -109,7 +114,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
             'pattern' => 'counter-pixel',
             'language' => '*',
             'action' => function ($language = null) {
-                $pvc = \Bnomei\PageViewCounter::singleton();
+                $pvc = PageViewCounter::singleton();
                 if ($pvc->willTrack()) {
                     $pvc->increment(
                         site()->homePage()?->id() ?? 'home',
@@ -128,10 +133,12 @@ Kirby::plugin('bnomei/pageviewcounter', [
                     $id = $language;
                 }
 
-                $pvc = \Bnomei\PageViewCounter::singleton();
-                if ($pvc->willTrack()) {
+                $pvc = PageViewCounter::singleton();
+                $page = page($id);
+
+                if ($page && $pvc->willTrack()) {
                     $pvc->increment(
-                        $id,
+                        $page->id(),
                         time()
                     );
                 }

@@ -60,11 +60,25 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
 
             if ($obj === null) {
                 $viewcount = $count;
-                $this->database()->query("INSERT INTO pageviewcount (id, viewcount, last_visited_at) VALUES ('$id', $viewcount, $timestamp)");
+                $this->database()->execute(
+                    'INSERT INTO pageviewcount (id, viewcount, last_visited_at) VALUES (:id, :viewcount, :timestamp)',
+                    [
+                        'id' => $id,
+                        'viewcount' => $viewcount,
+                        'timestamp' => $timestamp,
+                    ]
+                );
             } else {
-                $viewcount = $obj->viewcount + $count;
-                $timestamp = $obj->last_visited_at < $timestamp ? $timestamp : $obj->last_visited_at;
-                $this->database()->query("UPDATE pageviewcount SET viewcount = $viewcount, last_visited_at = $timestamp WHERE id='$id'");
+                $viewcount = intval($obj->viewcount) + $count;
+                $timestamp = intval($obj->last_visited_at) < $timestamp ? $timestamp : intval($obj->last_visited_at);
+                $this->database()->execute(
+                    'UPDATE pageviewcount SET viewcount = :viewcount, last_visited_at = :timestamp WHERE id = :id',
+                    [
+                        'id' => $id,
+                        'viewcount' => $viewcount,
+                        'timestamp' => $timestamp,
+                    ]
+                );
             }
             $this->database()->execute('COMMIT;');
         } catch (\Exception $e) {
@@ -78,7 +92,10 @@ class PageViewCounterSQLite implements PageViewCountIncrementor
 
     public function get(string $id): ?Obj
     {
-        foreach ($this->database()->query("SELECT * from pageviewcount WHERE id='$id'") as $obj) {
+        foreach ($this->database()->query(
+            'SELECT * FROM pageviewcount WHERE id = :id',
+            ['id' => $id]
+        ) as $obj) {
             return $obj;
         }
 
