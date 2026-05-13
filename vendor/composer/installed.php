@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'bnomei/kirby3-pageviewcounter',
-        'pretty_version' => '5.3.2',
-        'version' => '5.3.2.0',
+        'pretty_version' => '5.4.0',
+        'version' => '5.4.0.0',
         'reference' => null,
         'type' => 'kirby-plugin',
         'install_path' => __DIR__ . '/../../',
@@ -11,8 +11,8 @@
     ),
     'versions' => array(
         'bnomei/kirby3-pageviewcounter' => array(
-            'pretty_version' => '5.3.2',
-            'version' => '5.3.2.0',
+            'pretty_version' => '5.4.0',
+            'version' => '5.4.0.0',
             'reference' => null,
             'type' => 'kirby-plugin',
             'install_path' => __DIR__ . '/../../',
@@ -29,18 +29,18 @@
             'dev_requirement' => false,
         ),
         'jaybizzle/crawler-detect' => array(
-            'pretty_version' => 'v1.3.5',
-            'version' => '1.3.5.0',
-            'reference' => 'fbf1a3e81d61b088e7af723fb3c7a4ee92ac7e34',
+            'pretty_version' => 'v1.3.11',
+            'version' => '1.3.11.0',
+            'reference' => '484792759de89fe94ea6a192065ea7cd99f1eaa2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../jaybizzle/crawler-detect',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'matomo/device-detector' => array(
-            'pretty_version' => '6.4.7',
-            'version' => '6.4.7.0',
-            'reference' => 'e53eed31bb1530851feebe52bd64c3451da19e77',
+            'pretty_version' => '6.5.0',
+            'version' => '6.5.0.0',
+            'reference' => 'e0fff2309dad83eb3cfb2564e524be715cfcf3cf',
             'type' => 'library',
             'install_path' => __DIR__ . '/../matomo/device-detector',
             'aliases' => array(),
@@ -58,7 +58,7 @@
         'piwik/device-detector' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '6.4.7',
+                0 => '6.5.0',
             ),
         ),
     ),
