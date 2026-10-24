@@ -75,7 +75,6 @@ class PageViewCounter
             \header('Content-type: image/png');
             \imagepng($IMG);
             \imagecolordeallocate($IMG, is_int($background) ? $background : 0);
-            \imagedestroy($IMG);
         } catch (Exception $e) {
             \header('Content-type: text/plain');
             echo $e->getMessage();
