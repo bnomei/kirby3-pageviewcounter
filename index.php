@@ -1,7 +1,9 @@
 <?php
 
+use Bnomei\LastVisitedField;
 use Bnomei\PageViewCounter;
 use Bnomei\PageViewCounterSQLite;
+use Bnomei\ViewCountField;
 use Kirby\Cms\Page;
 use Kirby\Toolkit\Html;
 
@@ -42,8 +44,8 @@ Kirby::plugin('bnomei/pageviewcounter', [
         ],
     ],
     'fields' => [
-        'viewcount' => \Bnomei\ViewCountField::class,
-        'lastvisited' => \Bnomei\LastVisitedField::class,
+        'viewcount' => ViewCountField::class,
+        'lastvisited' => LastVisitedField::class,
     ],
     'pagesMethods' => [
         'pageviewcount' => function (int $base = 0): int {
