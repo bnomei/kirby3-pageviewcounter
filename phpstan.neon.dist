@@ -3,6 +3,8 @@ parameters:
     paths:
         - classes
         - index.php
+    stubFiles:
+        - tests/page-methods.stub
     excludePaths:
         - tests
 

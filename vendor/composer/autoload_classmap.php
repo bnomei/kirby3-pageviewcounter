@@ -6,10 +6,12 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Bnomei\\LastVisitedField' => $baseDir . '/classes/LastVisitedField.php',
     'Bnomei\\PageViewCountIncrementor' => $baseDir . '/classes/PageViewCountIncrementor.php',
     'Bnomei\\PageViewCounter' => $baseDir . '/classes/PageViewCounter.php',
     'Bnomei\\PageViewCounterField' => $baseDir . '/classes/PageViewCounterField.php',
     'Bnomei\\PageViewCounterSQLite' => $baseDir . '/classes/PageViewCounterSQLite.php',
+    'Bnomei\\ViewCountField' => $baseDir . '/classes/ViewCountField.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'DeviceDetector\\Cache\\CacheInterface' => $vendorDir . '/matomo/device-detector/Cache/CacheInterface.php',
     'DeviceDetector\\Cache\\DoctrineBridge' => $vendorDir . '/matomo/device-detector/Cache/DoctrineBridge.php',

@@ -1,0 +1,12 @@
+<?php
+
+namespace Kirby\Cms;
+
+/**
+ * @method int pageviewcount()
+ * @method string pagelastvisited(string $format = 'c')
+ */
+class Page {}
+
+/** @method int pageviewcount(int $base = 0) */
+class Pages {}

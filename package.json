@@ -1,0 +1,12 @@
+{
+  "name": "kirby3-pageviewcounter",
+  "private": true,
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "dev": "kirbyup dev src/index.js",
+    "build": "kirbyup src/index.js"
+  },
+  "devDependencies": {
+    "kirbyup": "4.0.0"
+  }
+}

@@ -19,6 +19,7 @@
 /vendor/**/*.md
 /vendor/**/*.yml
 /vendor/**/*.yaml
+!/vendor/matomo/device-detector/regexes/**/*.yml
 /vendor/**/*.xml
 /vendor/**/*.dist
 /vendor/**/readme.php

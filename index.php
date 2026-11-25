@@ -42,25 +42,8 @@ Kirby::plugin('bnomei/pageviewcounter', [
         ],
     ],
     'fields' => [
-        'viewcount' => [
-            'computed' => [
-                'value' => function () {
-                    return PageViewCounter::singleton()->count($this->model()->id());
-                },
-            ],
-        ],
-        'lastvisited' => [
-            'props' => [
-                'format' => function (?string $format = null) {
-                    return $format ?? 'YYYY-MM-DD HH:m:s';
-                },
-            ],
-            'computed' => [
-                'value' => function () {
-                    return date('c', PageViewCounter::singleton()->timestamp($this->model()->id()));
-                },
-            ],
-        ],
+        'viewcount' => \Bnomei\ViewCountField::class,
+        'lastvisited' => \Bnomei\LastVisitedField::class,
     ],
     'pagesMethods' => [
         'pageviewcount' => function (int $base = 0): int {
@@ -86,7 +69,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
         'counterImage' => function () {
             $url = $this->url(
                 kirby()->languages()->count() > 1 ?
-                    kirby()->languages()->first()->code() :
+                    kirby()->languages()->first()?->code() :
                     null
             );
 
@@ -102,7 +85,7 @@ Kirby::plugin('bnomei/pageviewcounter', [
         'counterCss' => function () {
             $url = $this->url(
                 kirby()->languages()->count() > 1 ?
-                    kirby()->languages()->first()->code() :
+                    kirby()->languages()->first()?->code() :
                     null
             );
 

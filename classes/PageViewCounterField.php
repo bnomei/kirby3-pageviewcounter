@@ -51,7 +51,7 @@ class PageViewCounterField implements PageViewCountIncrementor
         $field = $page->{$this->fieldcount}();
         if ($field->isNotEmpty()) {
             return [
-                $this->fieldcount => $field->toInt(), // @phpstan-ignore-line
+                $this->fieldcount => $field->toInt(),
                 $this->fieldtimestamp => $page->{$this->fieldtimestamp}()->toInt(),
             ];
         }
