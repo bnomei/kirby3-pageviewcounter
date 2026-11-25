@@ -11,48 +11,50 @@ class ComposerStaticInit590034328f83cab6410857268ae5bd70
     );
 
     public static $prefixLengthsPsr4 = array (
-        'K' =>
+        'K' => 
         array (
             'Kirby\\' => 6,
         ),
-        'J' =>
+        'J' => 
         array (
             'Jaybizzle\\CrawlerDetect\\' => 24,
         ),
-        'D' =>
+        'D' => 
         array (
             'DeviceDetector\\' => 15,
         ),
-        'B' =>
+        'B' => 
         array (
             'Bnomei\\' => 7,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Kirby\\' =>
+        'Kirby\\' => 
         array (
             0 => __DIR__ . '/..' . '/getkirby/composer-installer/src',
         ),
-        'Jaybizzle\\CrawlerDetect\\' =>
+        'Jaybizzle\\CrawlerDetect\\' => 
         array (
             0 => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src',
         ),
-        'DeviceDetector\\' =>
+        'DeviceDetector\\' => 
         array (
             0 => __DIR__ . '/..' . '/matomo/device-detector',
         ),
-        'Bnomei\\' =>
+        'Bnomei\\' => 
         array (
             0 => __DIR__ . '/../..' . '/classes',
         ),
     );
 
     public static $classMap = array (
+        'Bnomei\\LastVisitedField' => __DIR__ . '/../..' . '/classes/LastVisitedField.php',
         'Bnomei\\PageViewCountIncrementor' => __DIR__ . '/../..' . '/classes/PageViewCountIncrementor.php',
         'Bnomei\\PageViewCounter' => __DIR__ . '/../..' . '/classes/PageViewCounter.php',
         'Bnomei\\PageViewCounterField' => __DIR__ . '/../..' . '/classes/PageViewCounterField.php',
         'Bnomei\\PageViewCounterSQLite' => __DIR__ . '/../..' . '/classes/PageViewCounterSQLite.php',
+        'Bnomei\\ViewCountField' => __DIR__ . '/../..' . '/classes/ViewCountField.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'DeviceDetector\\Cache\\CacheInterface' => __DIR__ . '/..' . '/matomo/device-detector/Cache/CacheInterface.php',
         'DeviceDetector\\Cache\\DoctrineBridge' => __DIR__ . '/..' . '/matomo/device-detector/Cache/DoctrineBridge.php',
